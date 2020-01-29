@@ -4,6 +4,7 @@
 <script src="https://unpkg.com/vue"></script>
 </head>
 <body>
+
   <div id="app">
     <book-component :books="books">
       <h1 slot="header">{{header}}</h1>
@@ -15,7 +16,9 @@
       </template>
     </book-component>
   </div>
+
 <script>
+
 const BookComponent ={
   template: `
   <div>
@@ -28,6 +31,7 @@ const BookComponent ={
   `,
   props: ['books']
 }
+
 new Vue({
   el: '#app',
   components: {'book-component': BookComponent},
