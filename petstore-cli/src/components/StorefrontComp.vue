@@ -31,7 +31,7 @@
     </span>
     <div class="rating">
       <span  v-bind:class="{'rating-active' :checkRating(product, rating)}"
-      v-for="(n, rating) in 5" :key=n >☆
+      v-for="(n, rating) in 5" :key="rating" >☆
     </span>
   </div>
 </div><!-- end of col-md-6-->
@@ -50,6 +50,7 @@ export default {
   },
   data () {
     return {
+      baseUrl: process.env.VUE_APP_BASE_URL,
       products: {},
       cart: []
     }
@@ -103,6 +104,8 @@ export default {
     }
   },
   created: function () {
+    console.log(this.baseUrl)
+    // axios.get('products.json')
     axios.get('products.json')
       .then(response => {
         this.products = response.data.products

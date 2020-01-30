@@ -28,22 +28,22 @@
       "rating": 4
     },
     {
-    "id": 1004,
-    "title": "Cat House",
-    "description": "A place for your cat to play!",
-    "price": 799,
-    "image": "/images/cat-house.jpg",
-    "availableInventory": 11,
-    "rating": 5
-  },
+      "id": 1004,
+      "title": "Cat House",
+      "description": "A place for your cat to play!",
+      "price": 799,
+      "image": "/images/cat-house.jpg",
+      "availableInventory": 11,
+      "rating": 5
+    },
     {
-    "id": 1005,
-    "title": "Laser Pointer",
-    "description": "Drive your cat crazy with this <em>amazing</em> product.",
-    "price": 4999,
-    "image": "/images/laser-pointer.jpg",
-    "availableInventory": 25,
-    "rating": 1
-  }
+      "id": 1005,
+      "title": "Laser Pointer",
+      "description": "Drive your cat crazy with this <em>amazing</em> product.",
+      "price": 4999,
+      "image": "/images/laser-pointer.jpg",
+      "availableInventory": 25,
+      "rating": 1
+    }
   ]
 }

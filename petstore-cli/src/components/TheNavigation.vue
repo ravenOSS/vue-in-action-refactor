@@ -5,7 +5,7 @@
     <b-navbar-nav class="ml-auto">
       <b-nav-form>
         <b-button class="my-2 my-sm-0" size="lg" v-on:click="showCheckout">
-          <font-awesome-icon icon="shopping-cart"/>{{ cartItemCount }}Checkout
+          <font-awesome-icon class="cart" icon="shopping-cart"/>{{ cartItemCount }}Checkout
         </b-button>
       </b-nav-form>
     </b-navbar-nav>
