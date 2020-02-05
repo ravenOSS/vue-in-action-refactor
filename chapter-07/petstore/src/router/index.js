@@ -13,22 +13,22 @@ export default new Router({
       path: '/',
       name: 'iMain',
       component: Main,
-      props: true,
+      props: true
     },
     {
-        path: '/product/:id',
-        name: 'Id',
-        component: Product,
-        props: true,
-        children: [
-          {
-            path: 'edit',
-            name: 'Edit',
-            component: EditProduct,
-            props: true
-          }
-        ]
-    },
+      path: '/product/:id',
+      name: 'Id',
+      component: Product,
+      props: true,
+      children: [
+        {
+          path: 'edit',
+          name: 'Edit',
+          component: EditProduct,
+          props: true
+        }
+      ]
+  },
     {
       path: '/form',
       name: 'Form',
@@ -37,7 +37,7 @@ export default new Router({
     },
     {
       path: '*',
-      redirect:"/"
+      redirect: '/'
     }
 
 

@@ -1,39 +1,69 @@
 <template>
   <header>
-  <b-navbar toggleable="lg" type="dark" variant="primary">
-    <b-navbar-brand href="#"><h1>{{ sitename }}</h1></b-navbar-brand>
-    <b-navbar-nav class="ml-auto">
-      <b-nav-form>
-        <b-button class="my-2 my-sm-0" size="lg" v-on:click="showCheckout">
-          <font-awesome-icon class="cart" icon="shopping-cart"/>{{ cartItemCount }}Checkout
+    <b-navbar
+      toggleable="lg"
+      type="dark"
+      variant="primary"
+    >
+      <b-navbar-brand href="#">
+        <h1>{{ sitename }}</h1>
+      </b-navbar-brand>
+      <b-navbar-nav class="ml-auto">
+        <b-button
+          class="lg"
+          @click="showCheckout"
+        >
+          <b-link
+            :to="{ name: 'store-front' }"
+            class="active"
+          >
+            <font-awesome-icon
+              icon="shopping-cart"
+              size="sm"
+              color="red"
+            />
+            {{ cartItemCount }}Checkout
+          </b-link>
         </b-button>
-      </b-nav-form>
-    </b-navbar-nav>
-  </b-navbar>
+      </b-navbar-nav>
+    </b-navbar>
   </header>
 </template>
 
 <script>
 export default {
-  name: 'the-nav',
-  data () {
-    return {
-      sitename: 'Black Pet Despot'
+  name: "TheNav",
+  props: {
+    cartItemCount: {
+      default: null,
+      type: Number
     }
   },
-  props: ['cartItemCount'],
+  data() {
+    return {
+      sitename: "Black Pet Despot"
+    };
+  },
   methods: {
-    showCheckout () {
-      this.$router.push({ name: 'Formview' })
+    showCheckout() {
+      this.$router.push({ name: "form-comp" });
     }
   }
-}
+};
 </script>
 
 <style scoped>
-a {
-  text-decoration: none;
-  color:cadetblue;
+.active {
+  color: red
+}
+.cart {
+  padding: 10px;
+  margin-right: 20px;
+  color: red
 }
 
+a {
+  text-decoration: none;
+  color: cadetblue;
+}
 </style>

@@ -1,28 +1,41 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import storeview from '@/views/StorefrontView'
-import Form from '@/views/Form'
+import Storefront from '@/components/StorefrontComp'
+import Form from '@/components/FormComp'
 import Product from '@/components/Product'
+import EditProduct from '@/components/EditProduct'
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'StorefrontView',
-    component: storeview,
+    name: 'store-front',
+    component: Storefront,
     props: true
   },
   {
     path: '/form',
-    name: 'Formview',
+    name: 'form-comp',
     component: Form,
     props: true
   },
   {
-    path: '/product/id',
+    path: '/product/:id',
     name: 'Id',
     component: Product,
-    props: true
+    props: true,
+    children: [
+      {
+        path: 'edit',
+        name: 'Edit',
+        component: EditProduct,
+        props: true
+      }
+    ]
+  },
+  {
+    path: '*',
+    redirect: '/'
   }
 ]
 

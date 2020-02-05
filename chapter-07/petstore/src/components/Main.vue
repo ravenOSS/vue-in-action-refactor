@@ -2,7 +2,7 @@
   <div>
   <my-header :cartItemCount="cartItemCount"></my-header>
   <main>
-    <div v-for="product in sortedProducts">
+    <div v-for="(product, id) in sortedProducts" :key="id">
       <div class="row">
         <div class="col-md-5 col-md-offset-0">
           <figure>
@@ -123,5 +123,4 @@ export default {
 };
 </script>
 <style scoped>
-
 </style>

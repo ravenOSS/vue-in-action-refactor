@@ -43,9 +43,6 @@ body {
   max-height:300px;
   max-width:100%;
 }
-.figure {
-
-}
 
 .rating-active:before {
    content: "\2605";

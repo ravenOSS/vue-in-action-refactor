@@ -1,118 +1,162 @@
+/* eslint-disable vue/html-indent */
+/* eslint-disable vue/no-v-html */
 <template>
-  <div>
-  <main>
-    <div v-for="(product, id) in products" v-bind:key="id">
-      <div class="row">
-        <div class="col-md-5 col-md-offset-0">
-          <figure>
-            <img class="product" v-bind:src="product.image" >
-          </figure>
+  <b-container>
+    <div class="store">
+      <TheNav :cart-item-count="cartItemCount" />
+    </div>
+    <p>cartItemCount: {{ cartItemCount }} </p>
+    <button @click="setCount(cartItemCount + 1);">
+      + 1
+    </button>
+    <button @click="setCount(cartItemCount - 1);">
+      - 1
+    </button>
+    <div>
+      <main>
+        <div
+          v-for="(product, id) in products"
+          :key="id"
+        >
+          <div class="row">
+            <div class="col-md-5 col-md-offset-0">
+              <figure>
+                <img
+                  class="product"
+                  :src="product.image"
+                >
+              </figure>
+            </div>
+            <div class="col-md-6 col-md-offset-0 description">
+              <b-link
+                tag="h1"
+                :to="{ name: 'Id', params: { id: product.id } }"
+              >
+                {{ product.title }}
+              </b-link>
+              <p v-html="product.description" />
+              <p class="price">
+                {{ product.price | formatPrice }}
+              </p>
+              <button
+                v-if="canAddToCart(product)"
+                class=" btn btn-primary btn-lg"
+                @click="addToCart(product)"
+              >
+                Add to cart
+              </button>
+              <button
+                v-else
+                disabled="true"
+                class=" btn btn-primary btn-lg"
+              >
+                Add to cart
+              </button>
+              <span
+                v-if="product.availableInventory - cartCount(product.id) === 0"
+                class="inventory-message"
+              >All Out!
+              </span>
+              <span
+                v-else-if="
+                  product.availableInventory - cartCount(product.id) < 5
+                "
+                class="inventory-message"
+              >
+                Only
+                {{ product.availableInventory - cartCount(product.id) }} left!
+              </span>
+              <span
+                v-else
+                class="inventory-message"
+              >Buy Now! </span>
+              <div class="rating">
+                <span
+                  v-for="(n, rating) in 5"
+                  :key="rating"
+                  :class="{
+                    'rating-active': checkRating(product, rating)
+                  }"
+                >☆
+                </span>
+              </div>
+            </div>
+            <!-- end of col-md-6-->
+          </div>
+          <!-- end of row-->
+          <hr>
         </div>
-        <div class="col-md-6 col-md-offset-0 description">
-          <router-link tag="h1" :to="{ name : 'Id', params: {id: product.id}}" >{{product.title}}</router-link>
-          <p v-html="product.description"></p>
-          <p class="price">
-            {{product.price | formatPrice}}
-          </p>
-          <button class=" btn btn-primary btn-lg"
-          v-on:click="addToCart(product)"
-          v-if="canAddToCart(product)">Add to cart</button>
-          <button disabled="true" class=" btn btn-primary btn-lg"
-          v-else >Add to cart</button>
-          <span class="inventory-message"
-          v-if="product.availableInventory - cartCount(product.id) === 0">All Out!
-        </span>
-        <span class="inventory-message"
-        v-else-if="product.availableInventory - cartCount(product.id) < 5">
-        Only {{product.availableInventory - cartCount(product.id)}} left!
-      </span>
-      <span class="inventory-message"
-      v-else>Buy Now!
-    </span>
-    <div class="rating">
-      <span  v-bind:class="{'rating-active' :checkRating(product, rating)}"
-      v-for="(n, rating) in 5" :key="rating" >☆
-    </span>
-  </div>
-</div><!-- end of col-md-6-->
-</div><!-- end of row-->
-<hr />
-</div><!-- end of v-for-->
-</main>
-</div>
+        <!-- end of v-for-->
+      </main>
+    </div>
+  </b-container>
 </template>
 <script>
-import axios from 'axios'
+import axios from "axios"
+import TheNav from "./TheNavigation.vue"
+import currencymixin from "../mixins/currencyMixin"
+import { store, mutations } from "../store/simpleState"
+
 export default {
-  name: 'store-front',
-  props: {
-    msg: String
+  name: "StoreFront",
+    components: {
+    TheNav
   },
-  data () {
+  mixins: [currencymixin],
+  data() {
     return {
       baseUrl: process.env.VUE_APP_BASE_URL,
       products: {},
       cart: []
-    }
-  },
-  methods: {
-    checkRating (n, myProduct) {
-      return myProduct.rating - n >= 0
-    },
-    addToCart (aProduct) {
-      this.cart.push(aProduct.id)
-    },
-    canAddToCart (aProduct) {
-      // return this.product.availableInventory > this.cartItemCount;
-      return (
-        aProduct.availableInventory >
-        this.cartCount(aProduct.id)
-      )
-    },
-    cartCount (id) {
-      let count = 0
-      for (var i = 0; i < this.cart.length; i++) {
-        if (this.cart[i] === id) {
-          count++
-        }
-      }
-      return count
-    }
+    };
   },
   computed: {
-    cartItemCount () {
-      return this.cart.length || ''
-    }
-  },
-  filters: {
-    formatPrice (price) {
-      if (!parseInt(price)) {
-        return ''
-      }
-      if (price > 99999) {
-        var priceString = (price / 100).toFixed(2)
-        var priceArray = priceString.split('').reverse()
-        var index = 3
-        while (priceArray.length > index + 3) {
-          priceArray.splice(index + 3, 0, ',')
-          index += 4
-        }
-        return '$' + priceArray.reverse().join('')
-      } else {
-        return '$' + (price / 100).toFixed(2)
-      }
-    }
-  },
-  created: function () {
-    console.log(this.baseUrl)
-    // axios.get('products.json')
-    axios.get('products.json')
-      .then(response => {
-        this.products = response.data.products
-        console.log(this.products)
-      })
+    cartItemCount() {
+      return this.cart.length || 0;
+    },
+    count() {
+      return store.cartItemCount;
   }
-}
+  },
+  created: function() {
+    axios
+      .get("http://localhost:3000/products")
+      .then(response => {
+        this.products = response.data
+        console.log(response.data);
+        console.log(response.data[1])
+      });
+  },
+  //   created: function() {
+  //   axios.get('products.json').then(response => {
+  //     this.products = response.data.products;
+  //     console.log(response.data.products);
+  //   });
+  // },
+  methods: {
+     setCount: mutations.setCount,
+  
+    checkRating(n, myProduct) {
+      return myProduct.rating - n >= 0;
+    },
+    addToCart(aProduct) {
+      this.cart.push(aProduct.id);
+    },
+    canAddToCart(aProduct) {
+      // return this.product.availableInventory > this.cartItemCount;
+      return aProduct.availableInventory > this.cartCount(aProduct.id);
+    },
+    cartCount(id) {
+      let count = 0;
+      for (var i = 0; i < this.cart.length; i++) {
+        if (this.cart[i] === id) {
+          count++;
+        }
+      }
+      return count;
+    }
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -129,6 +173,8 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #42b983;
+  font-weight: bold;
+  font-size: 150%;
+  color: black;
 }
 </style>
