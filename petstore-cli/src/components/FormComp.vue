@@ -1,7 +1,6 @@
 <template>
   <b-container>
     <TheNav :cart-item-count="cartItemCount" />
-    <h3><p>Count: {{ count }} </p></h3>
     <h3>Enter your information</h3>
     <br>
 
@@ -148,7 +147,6 @@
 
 <script>
 import TheNav from "./TheNavigation.vue"
-import { store } from "../store/simpleState"
 export default {
   name: "FormComp",
   components: { TheNav },
@@ -184,14 +182,11 @@ export default {
     };
   },
   computed: {
-        count() {
-      return store.count;
-  }
   },
   methods: {
     submitForm() {
       alert("Submitted");
-    }
+    },
   }
 };
 </script>

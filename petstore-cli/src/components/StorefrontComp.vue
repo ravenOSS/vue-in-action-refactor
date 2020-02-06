@@ -5,13 +5,6 @@
     <div class="store">
       <TheNav :cart-item-count="cartItemCount" />
     </div>
-    <p>cartItemCount: {{ cartItemCount }} </p>
-    <button @click="setCount(cartItemCount + 1);">
-      + 1
-    </button>
-    <button @click="setCount(cartItemCount - 1);">
-      - 1
-    </button>
     <div>
       <main>
         <div
@@ -95,7 +88,6 @@
 import axios from "axios"
 import TheNav from "./TheNavigation.vue"
 import currencymixin from "../mixins/currencyMixin"
-import { store, mutations } from "../store/simpleState"
 
 export default {
   name: "StoreFront",
@@ -112,11 +104,9 @@ export default {
   },
   computed: {
     cartItemCount() {
-      return this.cart.length || 0;
+      let count = this.cart.length || 0
+      return count
     },
-    count() {
-      return store.cartItemCount;
-  }
   },
   created: function() {
     axios
@@ -134,8 +124,6 @@ export default {
   //   });
   // },
   methods: {
-     setCount: mutations.setCount,
-  
     checkRating(n, myProduct) {
       return myProduct.rating - n >= 0;
     },
