@@ -85,8 +85,9 @@
   </b-container>
 </template>
 <script>
-import axios from "axios"
+// import axios from "axios"
 import TheNav from "./TheNavigation.vue"
+import {mapGetters} from 'vuex'
 import currencymixin from "../mixins/currencyMixin"
 
 export default {
@@ -97,26 +98,34 @@ export default {
   mixins: [currencymixin],
   data() {
     return {
-      baseUrl: process.env.VUE_APP_BASE_URL,
-      products: {},
       cart: []
     };
   },
   computed: {
+    ...mapGetters([
+      'products'
+    ]),
+
+// products() {
+    //   return this.$store.getters.products
+    // },
     cartItemCount() {
       let count = this.cart.length || 0
       return count
     },
   },
   created: function() {
-    axios
-      .get("http://localhost:3000/products")
-      .then(response => {
-        this.products = response.data
-        console.log(response.data);
-        console.log(response.data[1])
-      });
+    this.$store.dispatch('initStore')
   },
+  // created: function() {
+  //   axios
+  //     .get("http://localhost:3000/products")
+  //     .then(response => {
+  //       this.products = response.data
+  //       console.log(response.data);
+  //       console.log(response.data[1])
+  //     });
+  // },
   //   created: function() {
   //   axios.get('products.json').then(response => {
   //     this.products = response.data.products;
