@@ -11,7 +11,7 @@ import FormComp from '@/components/FormComp.vue'
 import TheNav from '@/components/TheNavigation.vue'
 
 export default {
-  name: 'formview',
+  name: 'FormView',
   components: {
     FormComp,
     TheNav

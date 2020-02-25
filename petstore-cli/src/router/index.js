@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Storefront from '@/components/StorefrontComp'
-import Form from '@/components/FormComp'
+import Storefront from '@/components/Storefront'
+import Checkout from '@/components/Checkout'
 import Product from '@/components/Product'
 import EditProduct from '@/components/EditProduct'
 Vue.use(VueRouter)
@@ -15,8 +15,8 @@ const routes = [
   },
   {
     path: '/form',
-    name: 'form-comp',
-    component: Form,
+    name: 'checkout',
+    component: Checkout,
     props: true
   },
   {

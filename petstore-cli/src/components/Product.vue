@@ -31,7 +31,7 @@
 <script>
 import TheNav from "./TheNavigation.vue";
 import currencymixin from "../mixins/currencyMixin"
-import axios from "axios";
+// import axios from "axios";
 export default {
   components: { TheNav },
   mixins: [currencymixin],
@@ -40,20 +40,20 @@ export default {
       product: ""
     };
   },
-  created: function() {
-    axios
-      .get("http://localhost:3000/products", {
-        params: {
-          id: this.$route.params.id
-        }
-      })
-      .then(response => {
-        console.log(response.data);
-        this.product = response.data[0]
-        // this.product = response.data.products.filter(data => data.id === this.$route.params.id)
-        console.log(this.product.image);
-      });
-  },
+  // created: function() {
+  //   axios
+  //     .get("http://localhost:3000/products", {
+  //       params: {
+  //         id: this.$route.params.id
+  //       }
+  //     })
+  //     .then(response => {
+  //       console.log(response.data);
+  //       this.product = response.data[0]
+  //       // this.product = response.data.products.filter(data => data.id === this.$route.params.id)
+  //       console.log(this.product.image);
+  //     });
+  // },
   methods: {
     edit() {
       this.$router.push({name: 'Edit'})

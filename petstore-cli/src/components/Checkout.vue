@@ -148,7 +148,7 @@
 <script>
 import TheNav from "./TheNavigation.vue"
 export default {
-  name: "FormComp",
+  name: "Checkout",
   components: { TheNav },
   props: {
     // eslint-disable-next-line vue/require-default-prop

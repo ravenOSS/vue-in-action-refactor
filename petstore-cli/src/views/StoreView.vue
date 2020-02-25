@@ -10,7 +10,7 @@
 <script>
 // @ is an alias to /src
 import TheNav from "@/components/TheNavigation.vue";
-import Storefront from "@/components/StorefrontComp.vue";
+import Storefront from "@/components/Storefront.vue";
 
 export default {
   name: "Storeview",

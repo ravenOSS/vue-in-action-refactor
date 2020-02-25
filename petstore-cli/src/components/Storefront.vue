@@ -1,5 +1,4 @@
-/* eslint-disable vue/html-indent */
-/* eslint-disable vue/no-v-html */
+/* eslint-disable */
 <template>
   <b-container>
     <div class="store">
@@ -87,6 +86,7 @@
 <script>
 // import axios from "axios"
 import TheNav from "./TheNavigation.vue"
+import { db } from '../db'
 import {mapGetters} from 'vuex'
 import currencymixin from "../mixins/currencyMixin"
 
@@ -98,12 +98,13 @@ export default {
   mixins: [currencymixin],
   data() {
     return {
+      products: {},
       cart: []
     };
   },
   computed: {
     ...mapGetters([
-      'products'
+      'loggedin'
     ]),
 
 // products() {
@@ -114,24 +115,14 @@ export default {
       return count
     },
   },
-  created: function() {
-    this.$store.dispatch('initStore')
+  firestore() {
+    return {
+       products: db.collection("koder-products")
+    }
   },
-  // created: function() {
-  //   axios
-  //     .get("http://localhost:3000/products")
-  //     .then(response => {
-  //       this.products = response.data
-  //       console.log(response.data);
-  //       console.log(response.data[1])
-  //     });
-  // },
-  //   created: function() {
-  //   axios.get('products.json').then(response => {
-  //     this.products = response.data.products;
-  //     console.log(response.data.products);
-  //   });
-  // },
+  beforeCreate: function() {
+  },
+
   methods: {
     checkRating(n, myProduct) {
       return myProduct.rating - n >= 0;
@@ -153,6 +144,24 @@ export default {
       return count;
     }
   },
+    // created: function() {
+  //   this.$store.dispatch('initStore')
+  // },
+  // created: function() {
+  //   axios
+  //     .get("http://localhost:3000/products")
+  //     .then(response => {
+  //       this.products = response.data
+  //       console.log(response.data);
+  //       console.log(response.data[1])
+  //     });
+  // },
+  //   created: function() {
+  //   axios.get('products.json').then(response => {
+  //     this.products = response.data.products;
+  //     console.log(response.data.products);
+  //   });
+  // },
 };
 </script>
 
@@ -173,5 +182,22 @@ a {
   font-weight: bold;
   font-size: 150%;
   color: black;
+}
+
+
+.rating-active:before {
+   content: "\2605";
+   position: absolute;
+}
+.rating {
+  display: inline;
+  margin-left: 10px;
+  margin-top: 10px;
+  float:right;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
 }
 </style>

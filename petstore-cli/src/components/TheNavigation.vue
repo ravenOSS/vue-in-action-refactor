@@ -9,21 +9,41 @@
         <h1>{{ sitename }}</h1>
       </b-navbar-brand>
       <b-navbar-nav class="ml-auto">
+        <div v-if="!myAuth">
+          <b-button
+            class="default"
+            @click="signIn"
+          >
+            Sign In
+          </b-button>
+        </div>
+
+        <div v-else>
+          <b-button
+            class="default"
+            @click="signOut"
+          >
+            <img
+              class="photo"
+              :src="myAuth.photoURL"
+            >
+            Sign Out
+          </b-button>
+        </div>
         <b-button
           class="lg"
-          @click="showCheckout"
         >
           <b-link
-            :to="{ name: 'store-front' }"
+            :to="{ name: 'checkout' }"
             class="active"
-          >
-            <font-awesome-icon
-              icon="shopping-cart"
-              size="sm"
-              color="red"
-            />
-            {{ cartItemCount }}Checkout
-          </b-link>
+            @click="showCheckout"
+          />
+          <font-awesome-icon
+            icon="shopping-cart"
+            size="sm"
+            color="red"
+          />
+          {{ cartItemCount }}Checkout
         </b-button>
       </b-navbar-nav>
     </b-navbar>
@@ -31,6 +51,7 @@
 </template>
 
 <script>
+import firebase from "firebase";
 export default {
   name: "TheNav",
   props: {
@@ -44,9 +65,46 @@ export default {
       sitename: "Black Pet Despot"
     };
   },
+  beforeCreate() {
+  firebase.auth().onAuthStateChanged(user => {
+    this.$store.commit("SET_AUTH", user || false);
+  });
+  },
+  // eslint-disable-next-line vue/order-in-components
+  computed: {
+    myAuth() {
+      return this.$store.getters.loggedin;
+    }
+  },
+  
+
   methods: {
     showCheckout() {
-      this.$router.push({ name: "form-comp" });
+      this.$router.push({ name: "checkout" });
+    },
+    signIn() {
+      let provider = new firebase.auth.GoogleAuthProvider();
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(function(result) {
+          console.log("Signed in: ", result);
+        })
+        .catch(function(error) {
+          console.log("error ", error);
+        });
+    },
+    signOut() {
+      firebase
+        .auth()
+        .signOut()
+        .then(function() {
+          // Sign out successful
+          console.log("Signed Out");
+        })
+        .catch(function(error) {
+          console.log("Error in Sign Out: ", error);
+        });
     }
   }
 };
@@ -54,16 +112,23 @@ export default {
 
 <style scoped>
 .active {
-  color: red
+  color: red;
+}
+.photo {
+  width: 25px;
+  height: 25px;
 }
 .cart {
   padding: 10px;
   margin-right: 20px;
-  color: red
+  color: black;
 }
 
 a {
   text-decoration: none;
   color: cadetblue;
+}
+.b-link:active {
+  color: black;
 }
 </style>
