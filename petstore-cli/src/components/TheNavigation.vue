@@ -30,21 +30,18 @@
             Sign Out
           </b-button>
         </div>
-        <b-button
-          class="lg"
-        >
-          <b-link
-            :to="{ name: 'checkout' }"
-            class="active"
-            @click="showCheckout"
-          />
-          <font-awesome-icon
-            icon="shopping-cart"
-            size="sm"
-            color="red"
-          />
-          {{ cartItemCount }}Checkout
-        </b-button>
+        <b-link :to="{ name: 'checkout' }">
+          <b-button
+            class="lg"
+          >
+            <font-awesome-icon
+              icon="shopping-cart"
+              size="sm"
+              color="red"
+            />
+            {{ cartItemCount }}Checkout
+          </b-button>
+        </b-link>
       </b-navbar-nav>
     </b-navbar>
   </header>
@@ -77,10 +74,9 @@ export default {
     }
   },
   
-
   methods: {
     showCheckout() {
-      this.$router.push({ name: "checkout" });
+      this.$router.push({ name: 'checkout' });
     },
     signIn() {
       let provider = new firebase.auth.GoogleAuthProvider();

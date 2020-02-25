@@ -3,7 +3,7 @@
 <template>
   <b-container>
     <TheNav />
-    <h1>This is the id {{ $route.params.id }}</h1>
+    <h3>This is the id {{ $route.params.id }}</h3>
     <div class="row">
       <div class="col-md-5 col-md-offset-0">
         <figure>
