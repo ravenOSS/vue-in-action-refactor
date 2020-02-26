@@ -14,7 +14,7 @@ Key Changes:
 ## Create Google project and add Firestore
 - Use Firestore **console** to manage DB. Don't go directly from Accounts Page. You need to set up DB, collection, and auth. Read Google's docs to see what this should look like
 - Add connection credentials to db.example.js and change name to db.js
-- You may enter collection data directly through the Firebase console. Alternative is to use fire-code(in this repo-soon) for a local UI.
+- You may enter collection data directly through the Firebase console. Alternative is to use fire-code [https://github.com/ravenOSS/fire-code-petstore] for a local UI.
 Styling may still use standard Bootstrap 4.
 Code may or may not run at different commits
 
